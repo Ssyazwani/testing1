@@ -21,11 +21,15 @@
                 <p th:text="${ayah.number}"></p>
                 <p th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></p>
                 <p th:text="${ayah.text}"></p>
-                <input type="checkbox" id="stop_${iterStat.index}" name="progressStatus" value="stop">
-                <label for="stop_${iterStat.index}">Stop here for now</label>                
+                <!--input type="checkbox" id="stop_${iterStat.index}" name="progressStatus" value="stop">
+                <label for="stop_${iterStat.index}">Stop here for now</label-->                
             </li>
         </ul>
     </div>
+
+    <label for="note">Note:</label>
+        <textarea id="Note" name="Note" rows="4" cols="50"></textarea>
+        <br/>
 
     <form action="/userPage" method="get">
         <button type="submit">Save</button>

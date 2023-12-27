@@ -1,40 +1,45 @@
 package testtest.surah.list.surahlisttest.model;
 
-import java.util.List;
 
 public class SavedData {
-
-    private String surahName;
-    private String englishName;
-    private int numberOfAyahs;
-    private boolean stop;
-  
-
-    public String getSurahName() {
-        return surahName;
-    }
-    public void setSurahName(String surahName) {
-        this.surahName = surahName;
-    }
-    public String getEnglishName() {
-        return englishName;
-    }
-    public void setEnglishName(String englishName) {
-        this.englishName = englishName;
-    }
-    public int getNumberOfAyahs() {
-        return numberOfAyahs;
-    }
-    public void setNumberOfAyahs(int numberOfAyahs) {
-        this.numberOfAyahs = numberOfAyahs;
-    }
-    public boolean isStop() {
-        return stop;
-    }
-    public void setStop(boolean stop) {
-        this.stop = stop;
-    }
     
+   
+    private String birthdate;
 
-    
+
+    private String comments;
+
+
+      public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public SavedData(String birthdate, String comments) {
+        this.birthdate = birthdate;
+        this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Loaded Data{" +
+                "Date=" + birthdate +
+                ", comments ='" + comments  +
+                '}';
+
+    }
+
+
+
 }

@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Saved Data</title>
 </head>
 <body>
-    <h1>Saved Data</h1>
+    <h1>View Saved Data for Email: <span th:text="${email}"></span></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Current Date</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${savedData != null}">
+                <td th:if="${savedData != null}" th:text="${savedData.birthdate}"></td>
+                <td th:if="${savedData != null}" th:text="${savedData.comments}"></td>
+            </tr>
+            <tr th:unless="${savedData != null}">
+                <td colspan="2">No data found</td>
+            </tr>
+            </tbody>
+            </tr>
+        </tbody>
+    </table>
 
-    <div th:if="${savedData != null}">
-        <p>Surah Name: <span th:text="${savedData.surahName}"></span></p>
-        <p>English Name: <span th:text="${savedData.englishName}"></span></p>
-        <p>Number of Ayahs: <span th:text="${savedData.numberOfAyahs}"></span></p>
-        <p>Stop: <span th:text="${savedData.stop}"></span></p>
-    </div>
 
-    <div th:if="${savedData == null}">
-        <p>No data found for the specified email.</p>
-    </div>
-    <form action="/goback" method="get">
-        <button type="submit">Go Back</button>
-    </form>
+
+<form action="/goback" method="get">
+    <button type="submit">Go Back</button>
+</form>
+
 </body>
 </html>

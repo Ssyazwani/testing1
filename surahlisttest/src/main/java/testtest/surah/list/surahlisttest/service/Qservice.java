@@ -1,6 +1,8 @@
 package testtest.surah.list.surahlisttest.service;
 
 import java.io.StringReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,6 +11,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,13 +33,20 @@ import testtest.surah.list.surahlisttest.model.Surah;
 @Service
 public class Qservice {
 
-      @Autowired
-      private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisTemplate<String, SavedData> redisTemplate;
 
-      private final ObjectMapper objectMapper = new ObjectMapper();
+    private RestTemplate restTemplate = new RestTemplate();
 
-      private RestTemplate restTemplate = new RestTemplate();
-      String baseurl="https://api.alquran.cloud/v1/surah";
+    String baseurl="https://api.alquran.cloud/v1/surah";
+
+
+    private HashOperations<String, String, SavedData> hashOperations;
+
+    public void QService(RedisTemplate<String, SavedData> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+        this.hashOperations = redisTemplate.opsForHash();
+    }
 
 
 
@@ -152,39 +163,50 @@ private Ayah parseAyahObject(JsonObject jsonAyah) {
     return ayah;
 }
 
-public void saveDataToRedis(String email, Surah selectedSurah, boolean stop) {
-        
-        Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("surahName", selectedSurah.getName());
-        dataMap.put("englishName", selectedSurah.getEnglishName());
-        dataMap.put("numberOfAyahs", selectedSurah.getNumberOfAyahs());
-        dataMap.put("stop", stop);
 
-        try {
-            String jsonData = objectMapper.writeValueAsString(dataMap);
+public void saveDataToRedis(String email, String birthdate, String comments) {
+    String redisKey = email;
 
-            
-            stringRedisTemplate.opsForValue().set(email, jsonData);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
+    Map<String, String> dataMap = new HashMap<>();
+    dataMap.put("birthdate", birthdate);
+    dataMap.put("comments", comments);
 
-    public SavedData loadDataFromRedis(String email) {
-     
-        String jsonData = stringRedisTemplate.opsForValue().get(email);
+    redisTemplate.opsForHash().putAll(redisKey, dataMap);
+}
 
-        if (jsonData != null) {
-            
-            try {
-                return objectMapper.readValue(jsonData, SavedData.class);
-            } catch (JsonProcessingException e) {
-                
-                e.printStackTrace();
-            }
-        }
 
-        return null;
-    }
+
+
+
+
+public SavedData loadDataFromRedis(String email) {
+    String redisKey = email;
+
+    Map<Object, Object> dataMap = redisTemplate.opsForHash().entries(redisKey);
+
+    SavedData savedData = new SavedData(
+        (String) dataMap.get("birthdate"),
+        (String) dataMap.get("comments")
+    );
+
+    return savedData;
+}
+
+public boolean existsInRedis(String email) {
+    return redisTemplate.hasKey(email);
+}
+
+
+
+// public void deleteSavedData(String email) {
+//     String key = "your_prefix:" + email; // Set your Redis key structure here
+//     redisTemplate.delete(key);
+// }
+
+
+
 
 }
+
+
+

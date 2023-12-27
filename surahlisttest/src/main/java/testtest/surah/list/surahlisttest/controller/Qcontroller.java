@@ -7,6 +7,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,10 +33,6 @@ public class Qcontroller{
     @Autowired
     Qservice qService;
 
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
     
 @GetMapping("/surahList")
 public String showSurahList(Model model) {
@@ -77,8 +75,7 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
     model.addAttribute("selectedSurah", detailedSurah);
 
     if ("viewBookmarked".equals(action)) {
-        
-        return "viewSaved";
+        return "emailPage";
 
     } else if ("find".equals(action)) {
 
@@ -104,30 +101,116 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
        return "redirect:/surahList"; 
    }
 
- @GetMapping("/userPage")
+ 
+
+
+
+// @PostMapping("/save")
+// public String saveData(@RequestParam String email,
+//                        @RequestParam String comments,
+//                        Model model) {
+
+//     qService.saveDataToRedis(email, comments);
+
+//     return "redirect:/viewSaved?email=" + email;
+// }
+
+// @GetMapping("/viewSaved")
+// public String viewSavedData(@RequestParam String email, Model model) {
+//     List<String> comments = qService.loadCommentsFromRedis(email);
+//     model.addAttribute("comments", comments);
+//     return "viewSaved";
+
+
+@GetMapping("/userPage")
 public String showUserPage() {
     return "userPage";
 }
 
 @PostMapping("/save")
 public String saveData(@RequestParam String email,
-                       @ModelAttribute("selectedSurah") Surah selectedSurah,
-                       @RequestParam(required = false, defaultValue = "false") boolean stop,
+                       @RequestParam String birthdate,
+                       @RequestParam String comments,
                        Model model) {
 
-    qService.saveDataToRedis(email, selectedSurah, stop);
+    qService.saveDataToRedis(email, birthdate, comments);
 
-    return "redirect:/viewSaved";
+    return "redirect:/viewSaved?email=" + email;
 }
 
 @GetMapping("/viewSaved")
-public String viewSavedData(@RequestParam String email, Model model) {
+public String viewSaved(String email, Model model) {
     SavedData savedData = qService.loadDataFromRedis(email);
+    model.addAttribute("email", email);
     model.addAttribute("savedData", savedData);
     return "viewSaved";
 }
 
+@PostMapping("/search")
+public String findData(@RequestParam String email, Model model) {
+    String redisKey =  email;
+
+    if (qService.existsInRedis(redisKey)) {
+        SavedData savedData = qService.loadDataFromRedis(redisKey);
+        System.out.println("Loaded Data: " + savedData); 
+        model.addAttribute("email", email);
+        model.addAttribute("savedData", savedData);
+    } else {
+        model.addAttribute("email", email);
+    }
+    return "viewSaved";
 }
+
+
+
+// @PostMapping("/search")
+// public String findData(@RequestParam String email, Model model) {
+//     if (qService.existsInRedis(email)) {
+//         SavedData savedData = qService.loadDataFromRedis(email);
+//         model.addAttribute("email", email);
+//         model.addAttribute("savedData", savedData);
+//     } else {
+//         model.addAttribute("email", email);
+//     }
+//     return "viewSaved";
+// }
+
+
+
+    
+    // @PostMapping("/delete")
+    // public String deleteSavedData(@RequestParam String email) {
+    //     qService.deleteSavedData(email);
+    //     return "redirect:/viewSaved";
+    // }
+
+
+
+    // @PostMapping("/delete")
+    // public String deleteSavedData(@RequestParam Long id) {
+    //     // Fetch the SavedData by its unique identifier
+    //     SavedData savedData = qService.getSavedDataById(id);
+
+    //     // Check if the SavedData exists
+    //     if (savedData != null) {
+    //         // Delete the SavedData
+    //         savedData.delete();
+    //         // Alternatively, you can call a method in QService to delete data
+    //         // qService.deleteSavedData(savedData);
+
+    //         // Redirect to the viewSaved page
+    //         return "redirect:/viewSaved";
+    //     } else {
+    //         // Redirect to an error page or handle the error in some way
+    //         return "errorPage";
+    //     }
+    // }
+
+
+}
+
+
+
 
 
 
