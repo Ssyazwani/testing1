@@ -33,7 +33,6 @@ public class AppConfig {
     @Value("${spring.redis.database}")
     private int redisDatabase;
 
-   
 
     @Value("${spring.redis.password}")
     private String redisPassword;
