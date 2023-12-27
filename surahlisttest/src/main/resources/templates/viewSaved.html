@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Saved Data</title>
+</head>
+<body>
+    <h1>Saved Data</h1>
+
+    <div th:if="${savedData != null}">
+        <p>Surah Name: <span th:text="${savedData.surahName}"></span></p>
+        <p>English Name: <span th:text="${savedData.englishName}"></span></p>
+        <p>Number of Ayahs: <span th:text="${savedData.numberOfAyahs}"></span></p>
+        <p>Stop: <span th:text="${savedData.stop}"></span></p>
+    </div>
+
+    <div th:if="${savedData == null}">
+        <p>No data found for the specified email.</p>
+    </div>
+    <form action="/goback" method="get">
+        <button type="submit">Go Back</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Selected Surah</title>
+</head>
+<body>
+    <h1>Selected Surah</h1>
+    
+    <div th:if="${selectedSurah != null}">
+        <p>Surah Name</p><p th:text="${selectedSurah.name}"></p>
+        <p>English Name </p><p th:text="${selectedSurah.englishName}"></p>
+        <p>Translation</p><p th:text="${selectedSurah.englishNameTranslation}"></p>
+        <p>Total Number of Ayahs:</p><p th:text="${selectedSurah.numberOfAyahs}"></p>
+    </div>
+
+    <div th:if="${ListOtherLang != null and ListArabic != null}">
+        <h2>Ayahs</h2>
+        <ul>
+            <li th:each="ayah, iterStat : ${ListOtherLang}">
+                <p th:text="${ayah.number}"></p>
+                <p th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></p>
+                <p th:text="${ayah.text}"></p>
+                <input type="checkbox" id="stop_${iterStat.index}" name="progressStatus" value="stop">
+                <label for="stop_${iterStat.index}">Stop here for now</label>                
+            </li>
+        </ul>
+    </div>
+
+    <form action="/userPage" method="get">
+        <button type="submit">Save</button>
+    </form>
+
+    <form action="/goback" method="get">
+        <button type="submit">Go Back</button>
+    </form>
+</body>
+</html>
