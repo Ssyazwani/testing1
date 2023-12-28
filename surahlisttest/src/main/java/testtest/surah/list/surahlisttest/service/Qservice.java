@@ -164,17 +164,15 @@ private Ayah parseAyahObject(JsonObject jsonAyah) {
 }
 
 
-public void saveDataToRedis(String email, String birthdate, String comments) {
-    String redisKey = email;
+public void saveDataToRedis(SavedData savedData) {
+    String redisKey = savedData.getEmail();
 
     Map<String, String> dataMap = new HashMap<>();
-    dataMap.put("birthdate", birthdate);
-    dataMap.put("comments", comments);
+    dataMap.put("birthdate", savedData.getBirthdate());
+    dataMap.put("comments", savedData.getComments());
 
     redisTemplate.opsForHash().putAll(redisKey, dataMap);
 }
-
-
 
 
 

@@ -1,16 +1,33 @@
 package testtest.surah.list.surahlisttest.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class SavedData {
     
-   
+
+    
+    @NotBlank(message = "Comments cannot be blank")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private String birthdate;
 
-
+    @NotBlank(message = "Comments cannot be blank")
     private String comments;
 
+    @NotBlank(message = "Comments cannot be blank")
+    private String email;
 
-      public String getBirthdate() {
+
+      public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBirthdate() {
         return birthdate;
     }
 
@@ -29,6 +46,7 @@ public class SavedData {
     public SavedData(String birthdate, String comments) {
         this.birthdate = birthdate;
         this.comments = comments;
+        this.email = email;
     }
 
     @Override

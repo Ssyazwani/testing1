@@ -6,9 +6,11 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import testtest.surah.list.surahlisttest.model.Ayah;
 import testtest.surah.list.surahlisttest.model.SavedData;
 import testtest.surah.list.surahlisttest.model.Surah;
@@ -100,25 +104,91 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
    }
 
 
-
 @GetMapping("/userPage")
-public String showUserPage(Model model, HttpServletRequest request) {
+public String showUserPage(SavedData savedData, Model model, HttpServletRequest request) {
     HttpSession session = request.getSession();
+    savedData = new SavedData(null, null);
+    model.addAttribute("Saved data", savedData);
+    
     return "userPage";
 }
 
 
 
+
+// @PostMapping("/save")
+// public String saveData(@RequestParam String email,
+//                        @RequestParam String birthdate,
+//                        @RequestParam String comments,
+//                        Model model,HttpSession session) {
+
+//     qService.saveDataToRedis(email, birthdate, comments);
+
+//     return "redirect:/viewSaved/" + email;
+// }
+
 @PostMapping("/save")
-public String saveData(@RequestParam String email,
-                       @RequestParam String birthdate,
-                       @RequestParam String comments,
-                       Model model,HttpSession session) {
+public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
+                       BindingResult bindingResult,
+                       Model model) {
+    if (bindingResult.hasErrors()) {
+       
+        return "userPage";
+    }
 
-    qService.saveDataToRedis(email, birthdate, comments);
+    qService.saveDataToRedis(savedData);
 
-    return "redirect:/viewSaved/" + email;
+    return "redirect:/viewSaved/" + savedData.getEmail();
 }
+
+
+// @PostMapping("/userPage")
+// public String saveData(@RequestParam String email,
+//                        @RequestParam @Valid String birthdate,
+//                        @RequestParam @Valid String comments,
+//                        Model model,
+//                        HttpSession session,
+//                        BindingResult bindingResult) {
+
+
+//     if (bindingResult.hasErrors()) {
+//         model.addAttribute("email", email);
+//         model.addAttribute("birthdate", birthdate);
+//         return "userPage";
+//     }
+
+//     qService.saveDataToRedis(email, birthdate, comments);
+
+//     return "redirect:/viewSaved/" + email;
+// }
+
+// @GetMapping("/userPage")
+// public String showUserPage(Model model, HttpServletRequest request) {
+//     HttpSession session = request.getSession();
+    
+//     SavedData savedData = new SavedData(null, null);
+    
+//     model.addAttribute("savedData", savedData);
+
+//     return "userPage";
+// }
+
+// @PostMapping("/save")
+// public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
+//                        @RequestParam String email,
+//                        BindingResult bindingResult,
+//                        Model model,
+//                        HttpSession session) {
+//     if (bindingResult.hasErrors()) {
+//         // If there are validation errors, return to the form with the errors
+//         return "userPage";
+//     }
+
+//     qService.saveDataToRedis(email, savedData.getBirthdate(), savedData.getComments());
+
+//     return "redirect:/viewSaved/" + email;
+// }
+
 
 @GetMapping("/viewSaved/{email}")
 public String viewSaved(@PathVariable String email, Model model) {
