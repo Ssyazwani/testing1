@@ -10,11 +10,11 @@ COPY src src
 
 RUN mvn package -Dmaven.test.skip=true
 
-ENV PORT=8080 
 ENV SPRING_REDIS_HOST=localhost
 ENV SPRING_REDIS_PORT=6379
 ENV SPRING_REDIS_USER=
 ENV SPRING_REDIS_PASSWORD=
 
 
-ENTRYPOINT java -jar target/surahlisttest-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "target/surahlisttest-0.0.1-SNAPSHOT.jar"]
+

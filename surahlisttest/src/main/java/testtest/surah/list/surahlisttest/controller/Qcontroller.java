@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import testtest.surah.list.surahlisttest.model.Surah;
 import testtest.surah.list.surahlisttest.service.Qservice;
 
 @Controller
+@RequestMapping
 public class Qcontroller{
 
     @Autowired
@@ -115,18 +117,6 @@ public String showUserPage(SavedData savedData, Model model, HttpServletRequest 
 
 
 
-
-// @PostMapping("/save")
-// public String saveData(@RequestParam String email,
-//                        @RequestParam String birthdate,
-//                        @RequestParam String comments,
-//                        Model model,HttpSession session) {
-
-//     qService.saveDataToRedis(email, birthdate, comments);
-
-//     return "redirect:/viewSaved/" + email;
-// }
-
 @PostMapping("/save")
 public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
                        BindingResult bindingResult,
@@ -140,54 +130,6 @@ public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
 
     return "redirect:/viewSaved/" + savedData.getEmail();
 }
-
-
-// @PostMapping("/userPage")
-// public String saveData(@RequestParam String email,
-//                        @RequestParam @Valid String birthdate,
-//                        @RequestParam @Valid String comments,
-//                        Model model,
-//                        HttpSession session,
-//                        BindingResult bindingResult) {
-
-
-//     if (bindingResult.hasErrors()) {
-//         model.addAttribute("email", email);
-//         model.addAttribute("birthdate", birthdate);
-//         return "userPage";
-//     }
-
-//     qService.saveDataToRedis(email, birthdate, comments);
-
-//     return "redirect:/viewSaved/" + email;
-// }
-
-// @GetMapping("/userPage")
-// public String showUserPage(Model model, HttpServletRequest request) {
-//     HttpSession session = request.getSession();
-    
-//     SavedData savedData = new SavedData(null, null);
-    
-//     model.addAttribute("savedData", savedData);
-
-//     return "userPage";
-// }
-
-// @PostMapping("/save")
-// public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
-//                        @RequestParam String email,
-//                        BindingResult bindingResult,
-//                        Model model,
-//                        HttpSession session) {
-//     if (bindingResult.hasErrors()) {
-//         // If there are validation errors, return to the form with the errors
-//         return "userPage";
-//     }
-
-//     qService.saveDataToRedis(email, savedData.getBirthdate(), savedData.getComments());
-
-//     return "redirect:/viewSaved/" + email;
-// }
 
 
 @GetMapping("/viewSaved/{email}")
