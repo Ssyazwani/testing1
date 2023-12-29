@@ -13,13 +13,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
@@ -40,15 +37,17 @@ public class Qservice {
 
     String baseurl="https://api.alquran.cloud/v1/surah";
 
+    @Autowired
+    public Qservice(RedisTemplate<String, SavedData> redisTemplate) {
+    this.redisTemplate = redisTemplate;
+    this.hashOperations = redisTemplate.opsForHash();
+}
+
+
 
     private HashOperations<String, String, SavedData> hashOperations;
 
-    public void QService(RedisTemplate<String, SavedData> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-        this.hashOperations = redisTemplate.opsForHash();
-    }
-
-
+    
 
     public ResponseEntity<?> readAllSurahs(){
     ResponseEntity<?> responseEntity = restTemplate.getForEntity(baseurl, String.class);
@@ -65,6 +64,13 @@ public class Qservice {
     }
     
     public ResponseEntity<?> readApiOtherLang(Integer number, String language ){
+        String apiUrl = String.format("%s/%s/%s", baseurl, number, language);
+        return restTemplate.getForEntity(apiUrl, String.class);
+
+    }
+
+     public ResponseEntity<?> readApiRomanized(Integer number){
+        String language = "en.transliteration";
         String apiUrl = String.format("%s/%s/%s", baseurl, number, language);
         return restTemplate.getForEntity(apiUrl, String.class);
 
@@ -91,8 +97,8 @@ public class Qservice {
         e.printStackTrace();
     }
 
-    return Collections.emptyList();
-}
+    return Collections.emptyList();}
+
 
 
 
@@ -163,19 +169,16 @@ private Ayah parseAyahObject(JsonObject jsonAyah) {
     return ayah;
 }
 
-
 public void saveDataToRedis(SavedData savedData) {
     String redisKey = savedData.getEmail();
 
     Map<String, String> dataMap = new HashMap<>();
     dataMap.put("birthdate", savedData.getBirthdate());
     dataMap.put("comments", savedData.getComments());
+    dataMap.put("selectedSurahEnglishName", savedData.getSelectedSurahEnglishName());  
 
     redisTemplate.opsForHash().putAll(redisKey, dataMap);
 }
-
-
-
 
 public SavedData loadDataFromRedis(String email) {
     String redisKey = email;
@@ -184,22 +187,20 @@ public SavedData loadDataFromRedis(String email) {
 
     SavedData savedData = new SavedData(
         (String) dataMap.get("birthdate"),
-        (String) dataMap.get("comments")
+        (String) dataMap.get("comments"),
+        email, 
+        (String) dataMap.get("selectedSurahEnglishName")
     );
 
     return savedData;
 }
 
+
+
 public boolean existsInRedis(String email) {
     return redisTemplate.hasKey(email);
 }
 
-
-
-// public void deleteSavedData(String email) {
-//     String key = "your_prefix:" + email; // Set your Redis key structure here
-//     redisTemplate.delete(key);
-// }
 
 
 

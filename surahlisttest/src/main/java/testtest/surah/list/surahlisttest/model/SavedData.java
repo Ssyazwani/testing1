@@ -1,5 +1,8 @@
 package testtest.surah.list.surahlisttest.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotBlank;
@@ -8,18 +11,28 @@ public class SavedData {
     
 
     
-    @NotBlank(message = "Comments cannot be blank")
+    @NotBlank(message = "Date cannot be blank")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private String birthdate;
 
     @NotBlank(message = "Comments cannot be blank")
     private String comments;
 
-    @NotBlank(message = "Comments cannot be blank")
+    @NotBlank(message = "Email cannot be blank")
     private String email;
 
+    private String selectedSurahEnglishName;
 
-      public String getEmail() {
+
+      public String getSelectedSurahEnglishName() {
+        return selectedSurahEnglishName;
+    }
+
+    public void setSelectedSurahEnglishName(String selectedSurahEnglishName) {
+        this.selectedSurahEnglishName = selectedSurahEnglishName;
+    }
+
+    public String getEmail() {
         return email;
     }
 
@@ -43,11 +56,31 @@ public class SavedData {
         this.comments = comments;
     }
 
-    public SavedData(String birthdate, String comments) {
+    public String getFormattedBirthdate() {
+        if (birthdate != null && !birthdate.isEmpty()) {
+            try {
+                // Parse the current format
+                SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = currentFormat.parse(birthdate);
+
+                // Format it to the desired format
+                SimpleDateFormat desiredFormat = new SimpleDateFormat("dd-MM-yyyy");
+                return desiredFormat.format(date);
+            } catch (ParseException e) {
+                // Handle parsing exception
+                e.printStackTrace();
+            }
+        }
+        return ""; // or handle null case as needed
+    }
+
+    public SavedData(String birthdate, String comments, String email, String selectedSurahEnglishName) {
         this.birthdate = birthdate;
         this.comments = comments;
         this.email = email;
+        this.selectedSurahEnglishName = selectedSurahEnglishName;
     }
+    
 
     @Override
     public String toString() {
@@ -59,5 +92,8 @@ public class SavedData {
     }
 
 
-
 }
+
+
+
+

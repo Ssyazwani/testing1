@@ -8,28 +8,28 @@
     <h1>Selected Surah</h1>
     
     <div th:if="${selectedSurah != null}">
-        <p>Surah Name</p><p th:text="${selectedSurah.name}"></p>
-        <p>English Name </p><p th:text="${selectedSurah.englishName}"></p>
-        <p>Translation</p><p th:text="${selectedSurah.englishNameTranslation}"></p>
-        <p>Total Number of Ayahs:</p><p th:text="${selectedSurah.numberOfAyahs}"></p>
+        <p>Surah Name: <span th:text="${selectedSurah.name}"></span></p>
+        <p>English Name: <span th:text="${selectedSurah.englishName}"></span></p>
+        <p>Translated In English : <span th:text="${selectedSurah.englishNameTranslation}"></span></p>
+        <p>Number of Ayahs in this Surah: <span th:text="${selectedSurah.numberOfAyahs}"></span></p>
     </div>
 
-    <div th:if="${ListOtherLang != null and ListArabic != null}">
+    <div th:if="${ListOtherLang != null and ListArabic != null and ListRomanized != null}">
         <h2>Ayahs</h2>
         <ul>
             <li th:each="ayah, iterStat : ${ListOtherLang}">
                 <p th:text="${ayah.number}"></p>
                 <p th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></p>
+                <p th:if="${iterStat.index < ListRomanized.size()}" th:text="${ListRomanized[iterStat.index].text}"></p>
                 <p th:text="${ayah.text}"></p>
-                <!--input type="checkbox" id="stop_${iterStat.index}" name="progressStatus" value="stop">
-                <label for="stop_${iterStat.index}">Stop here for now</label-->                
             </li>
         </ul>
     </div>
+    
 
 
     <form action="/userPage" method="get">
-        <button type="submit">Save</button>
+        <button type="submit">Update Progress</button>
     </form>
 
     <form action="/goback" method="get">

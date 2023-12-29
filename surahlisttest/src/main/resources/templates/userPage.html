@@ -5,14 +5,24 @@
     <title>Notes</title>
 </head>
 <body>
-    <h1>Saving Notes</h1>
+    <h1>Saving Your Updated Progress</h1>
     <form th:action="@{/save}" th:method="post" th:object="${savedData}">
         <label for="email">Enter your email:</label>
-        <input type="text" th:field="*{email}" required>
+        <input type="text" th:field="*{email}">
         <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         <br/>
-    
-        <label for="comments">Comments:</label>
+
+        <label for="surahSelect">Select a Surah:</label>
+        <select id="surahSelect" name="surahSelect" th:field="*{selectedSurahEnglishName}">
+           <option th:each="surah : ${surahList}" 
+            th:value="${surah.englishName}" 
+            th:text="${surah.englishName}">
+        </option>
+        </select>
+        <br>
+
+
+        <label for="comments">Details of Progress:</label>
         <textarea th:field="*{comments}" rows="4" cols="50"></textarea>
         <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"></span>
         <br/>
@@ -21,6 +31,8 @@
         <input type="date" th:field="*{birthdate}" th:value="${currentDate}">
         <span th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></span>
         <br/>
+
+    
     
         <button type="submit">Submit</button>
     </form>

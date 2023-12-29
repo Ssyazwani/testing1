@@ -5,7 +5,9 @@
     <title>Surah List</title>
 </head>
 <body>
-    <h1>Surah List</h1>
+    <h1>Welcome to the Surah Tracking Progress</h1>
+
+    <h5>You can start reading from the first chapter (dropdown list has arrange the chapters of the quran chronologically) or use this to memorise the Surah</h5>
 
     <form th:action="@{/surahList}" th:method="post" th:object="${selectedSurah}">
         <label for="surahSelect">Select a Surah:</label>
@@ -24,7 +26,7 @@
             <option value="ja.japanese">Japanese</option>
         </select>
 
-        <button type="submit" name="action" value="viewBookmarked">View Notes</button>
+        <button type="submit" name="action" value="viewBookmarked">View Previous Saved Progress</button>
         <button type="submit" name="action" value="find">Find</button>
     </form>
 

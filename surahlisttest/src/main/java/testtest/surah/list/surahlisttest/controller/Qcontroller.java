@@ -84,13 +84,15 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
     } else if ("find".equals(action)) {
 
         ResponseEntity<?> responseOtherLang = qService.readApiOtherLang(surahNumber, language);
-
         List<Ayah> ListOtherLang = qService.parseAyahList(responseOtherLang.getBody().toString());
        
         ResponseEntity<String> responseArabic = qService.readApiArabic(surahNumber);
         List<Ayah> ListArabic = qService.parseAyahList(responseArabic.getBody());
 
+        ResponseEntity<?> responseRomanized = qService.readApiRomanized(surahNumber);
+        List<Ayah> ListRomanized = qService.parseAyahList(responseRomanized.getBody().toString());
 
+        model.addAttribute("ListRomanized", ListRomanized);
         model.addAttribute("ListOtherLang", ListOtherLang);
         model.addAttribute("ListArabic", ListArabic);
 
@@ -106,14 +108,23 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
    }
 
 
+
 @GetMapping("/userPage")
 public String showUserPage(SavedData savedData, Model model, HttpServletRequest request) {
+    savedData = new SavedData(null, null,null, null);
     HttpSession session = request.getSession();
-    savedData = new SavedData(null, null);
-    model.addAttribute("Saved data", savedData);
+    ResponseEntity<?> response = qService.readAllSurahs();
+    List<Surah> surahList = qService.parseSurahList((String) response.getBody());
+
+    // Set surahList directly in the model
+    model.addAttribute("surahList", surahList);
+    model.addAttribute("savedData", savedData);
     
     return "userPage";
 }
+
+
+
 
 
 
