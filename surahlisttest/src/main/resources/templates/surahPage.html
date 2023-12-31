@@ -2,38 +2,97 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Selected Surah</title>
+    <title>Showing Surah Selected</title> 
+    <style>
+        body { 
+            font-family: 'Georgia', serif;
+            background-color: antiquewhite;
+        }
+    
+        h1 {
+            font-family: 'Courier New', monospace;
+            color: black;
+        }
+    
+        h4 {
+            font-family: 'georgia', serif;
+            color: black;
+            background-color: rgb(249, 166, 131);
+        }
+
+        ul {
+        list-style-type: none; 
+         padding: 0; 
+        }
+
+        li {
+        margin-bottom: 10px; 
+        }
+        .button-style {
+         background-color: #e7d8a4;
+         border: solid;
+         color: rgb(11, 10, 10);
+         padding: 10px 10px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 14px;
+         margin: 4px 2px;
+         cursor: pointer;
+        }
+
+
+    </style>
 </head>
 <body>
-    <h1>Selected Surah</h1>
+    <h1>Selected Surah Information:</h1>
     
-    <div th:if="${selectedSurah != null}">
-        <p>Surah Name: <span th:text="${selectedSurah.name}"></span></p>
+    <div style="background-color: #f3cfcf; margin-bottom: 5px; padding: 10px; border-radius: 5px;" th:if="${selectedSurah != null}">
+        <p>Surah Name: <span style ="font-size:25px" th:text="${selectedSurah.name}"></span></p>
         <p>English Name: <span th:text="${selectedSurah.englishName}"></span></p>
         <p>Translated In English : <span th:text="${selectedSurah.englishNameTranslation}"></span></p>
         <p>Number of Ayahs in this Surah: <span th:text="${selectedSurah.numberOfAyahs}"></span></p>
     </div>
 
+    <h4><br>
+    <p>To update bookmarked progress, please proceed to click <em>Update Progress</em></p>
+        <p> Or you can scroll to the button page and click <em>Update Progress</em></p>
+    <p style="color: #ec2e2e;">To Note: Clicking save would mean overwriting your bookmarked progress, so you will only see your latest saved Progress<br></p>
+    
+    <p>If you wish to go back, please proceed to  click <em>Go Back</em></p>
+        <p>Or you can scroll to the button page and click <em>Go back</em></p><br></h4>
+
+    <form  action="/userPage" method="get">
+        <button type="submit" class="button-style">Update Progress</button>
+    </form>
+
+    <form  action="/goback" method="get">
+        <button type="submit" class="button-style">Go Back</button>
+    </form>
+
     <div th:if="${ListOtherLang != null and ListArabic != null and ListRomanized != null}">
-        <h2>Ayahs</h2>
-        <ul>
-            <li th:each="ayah, iterStat : ${ListOtherLang}">
-                <p th:text="${ayah.number}"></p>
-                <p th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></p>
-                <p th:if="${iterStat.index < ListRomanized.size()}" th:text="${ListRomanized[iterStat.index].text}"></p>
-                <p th:text="${ayah.text}"></p>
+        <br>
+        <h2>Ayahs in Surah:</h2>
+        <ul style="background-color: lightgray; padding: 10px; border-radius: 5px;">
+            <li th:each="ayah, iterStat : ${ListOtherLang}" style="background-color: #f5f5f5; margin-bottom: 5px; padding: 10px; border-radius: 5px;">
+                <br>
+                <p>No. <span th:text="${ayah.number}"></span></p>
+                <p>Arabic Text:<br><br> <span style ="font-size: 30px;" th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></span></p>
+                <p>Romanization: <span th:style="'font-style: italic;'" style ="font-size: 15px;" th:if="${iterStat.index < ListRomanized.size()}" th:text="${ListRomanized[iterStat.index].text}"></span></p>
+                <p>Translated Language: <span style ="font-size: 15px;" th:text="${ayah.text}"></span></p>
+                <br>
             </li>
         </ul>
     </div>
-    
+
 
 
     <form action="/userPage" method="get">
-        <button type="submit">Update Progress</button>
+        <button type="submit" class="button-style">Update Progress</button>
     </form>
 
     <form action="/goback" method="get">
-        <button type="submit">Go Back</button>
+        <button type="submit" class="button-style">Go Back</button>
     </form>
 </body>
 </html>

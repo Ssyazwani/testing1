@@ -1,14 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>View Saved Data</title>
+    <title>View Saved Progress</title>
+    <style>
+        body { 
+            font-family: 'Courier New', monospace;
+            background-color: antiquewhite;
+        }
+    
+        h2 {
+            font-family: 'Courier New', monospace;
+            color: black;
+        }
+    
+        h5 {
+            font-family: 'Courier New', monospace;
+            color: black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+       
+        th {
+            background-color: #f2f2f2;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        td {
+            background-color: #ece3e3;
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .button-style {
+         background-color: #e7d8a4;
+         border: solid;
+         color: rgb(11, 10, 10);
+         padding: 10px 10px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 14px;
+         margin: 4px 2px;
+         cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h2>View Latest Progress for Email: <span th:text="${email}"></span></h2>
+    <h2>Viewing Your Latest Progress: </h2>
     <table>
         <thead>
             <tr>
-                <th>Current Date</th>
+                <th>Date Of Updated Progress</th>
                 <th>Surah Name</th>
                 <th>Note</th>
             </tr>
@@ -25,13 +79,11 @@
         </tbody>
     </table>
 
+    <h4> Keep it up!</h4>
 
-    <h5> Keep it up!</h5>
-
-
-
+<br>
 <form action="/goback" method="get">
-    <button type="submit">Go Back</button>
+    <button type="submit" class="button-style">Go Back</button>
 </form>
 
 </body>

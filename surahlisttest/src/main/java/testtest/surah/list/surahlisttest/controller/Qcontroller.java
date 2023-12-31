@@ -1,12 +1,12 @@
 package testtest.surah.list.surahlisttest.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import testtest.surah.list.surahlisttest.model.Ayah;
 import testtest.surah.list.surahlisttest.model.SavedData;
 import testtest.surah.list.surahlisttest.model.Surah;
@@ -60,21 +59,17 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
                                      ) {
 
     Integer surahNumber = selectedSurah.getNumber();
-    System.out.println(surahNumber);
 
     ResponseEntity<?> response = qService.readAllSurahs();
 
     String responseBody = (String) response.getBody();
     // List<Surah> surahList = qService.parseSurahList(responseBody);
 
-    System.out.println("Selected Surah Number: " + surahNumber);
     List<Surah> surahList = (List<Surah>) session.getAttribute("surahList");
     Surah detailedSurah = surahList.stream()
             .filter(surah -> surah.getNumber().equals(surahNumber))
             .findFirst()
             .orElse(null);
-
-    System.out.println("Detailed Surah: " + detailedSurah);
 
     model.addAttribute("selectedSurah", detailedSurah);
 
@@ -109,23 +104,23 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
 
 
 
-@GetMapping("/userPage")
-public String showUserPage(SavedData savedData, Model model, HttpServletRequest request) {
-    savedData = new SavedData(null, null,null, null);
-    HttpSession session = request.getSession();
-    ResponseEntity<?> response = qService.readAllSurahs();
-    List<Surah> surahList = qService.parseSurahList((String) response.getBody());
-
-    // Set surahList directly in the model
-    model.addAttribute("surahList", surahList);
-    model.addAttribute("savedData", savedData);
-    
-    return "userPage";
-}
-
-
-
-
+   @GetMapping("/userPage")
+   public String showUserPage(SavedData savedData, Model model, HttpServletRequest request) {
+       savedData = new SavedData(null, null, null, null);
+       HttpSession session = request.getSession();
+       Surah selectedSurah = (Surah) session.getAttribute("selectedSurah");
+       String surahEnglishName = selectedSurah.getEnglishName();
+       System.out.println("Surah English Name: " + surahEnglishName);
+   
+       ResponseEntity<?> response = qService.readAllSurahs();
+       List<Surah> surahList1 = qService.parseSurahList((String) response.getBody());
+   
+       model.addAttribute("selectedSurah", selectedSurah);
+       model.addAttribute("surahList", surahList1);
+       model.addAttribute("savedData", savedData);
+   
+       return "userPage";
+   }
 
 
 @PostMapping("/save")
@@ -133,7 +128,9 @@ public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
                        BindingResult bindingResult,
                        Model model) {
     if (bindingResult.hasErrors()) {
-       
+        ResponseEntity<?> response = qService.readAllSurahs();
+       List<Surah> surahList = qService.parseSurahList((String) response.getBody());
+        model.addAttribute("surahList", surahList);
         return "userPage";
     }
 
@@ -141,6 +138,7 @@ public String saveData(@Valid @ModelAttribute("savedData") SavedData savedData,
 
     return "redirect:/viewSaved/" + savedData.getEmail();
 }
+
 
 
 @GetMapping("/viewSaved/{email}")

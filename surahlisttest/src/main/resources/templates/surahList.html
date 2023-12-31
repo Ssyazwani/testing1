@@ -2,22 +2,85 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Surah List</title>
+    <title>Surah Tracking Progress</title>
+    <style>
+        body { 
+            font-family: 'Georgia',serif;
+            background-color: antiquewhite;
+        }
+
+
+        h1 {
+            font-family: 'Courier New',monospace;
+            color: black;
+        }
+
+        h4,p{
+            font-family: 'Georgia',serif;
+            color: black;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .button-style {
+         background-color: #e7d8a4;
+         border: solid;
+         color: rgb(11, 10, 10);
+         padding: 10px 10px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 14px;
+         margin: 4px 2px;
+         cursor: pointer;
+        }
+
+        select {
+            background-color: rgb(242, 244, 236);
+            font-size: 16px;
+        }
+
+        select option {
+            color: rgb(3, 3, 3);
+        }
+
+
+       
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Surah Tracking Progress</h1>
+    <h1>Welcome to the Surah Progress Tracking</h1>
 
-    <h5>You can start reading from the first chapter (dropdown list has arrange the chapters of the quran chronologically) or use this to memorise the Surah</h5>
+    <h4>You can start reading from the first chapter (dropdown list has arrange the chapters of the quran chronologically) or use this to memorise the Surah</h4>
+
+
+    <br>
+    <div style="border: 2px solid #ccc; padding: 10px; background-color: #edeba5;">
+        <h4>Instructions on how to use:</h4>
+        <p>Select the Surah you want to read and the language you would like the Surah to be translated to!</p>
+        <p>Click <strong>Find</strong> to view the Surah selected</p>
+        <p>Click <strong>View Previous Saved Progress</strong> to review your previous saved progress</p>
+    </div>
+    
+
+    <br>
+    <br>
 
     <form th:action="@{/surahList}" th:method="post" th:object="${selectedSurah}">
-        <label for="surahSelect">Select a Surah:</label>
+        <label style="font-size:25px" for="surahSelect" >Select a Surah:</label>
         <select id="surahSelect" name="surahSelect" th:field="*{number}">
             <option th:each="surah : ${surahList}"
                     th:value="${surah.number}"
-                    th:text="${surah.englishName}"></option>
+                    th:text="${surah.number + ' - ' + surah.englishName}"></option>
         </select>
 
-        <label for="language">Language:</label>
+        <br>
+        <br>
+
+        <label style="font-size:25px" for="language">Selected a Language:</label>
         <select id="language" name="language">
             <option value="id.indonesian">Bahasa Indonesian</option>
             <option value="en.asad">English</option>
@@ -26,9 +89,17 @@
             <option value="ja.japanese">Japanese</option>
         </select>
 
-        <button type="submit" name="action" value="viewBookmarked">View Previous Saved Progress</button>
-        <button type="submit" name="action" value="find">Find</button>
-    </form>
+        <br>
+        <br>
+        <br>
+
+        <button type="submit" class="button-style" name="action" value="find">Find</button>
+        <br>
+        <br>
+    <button type="submit" class="button-style" name="action" value="viewBookmarked">View Previous Saved Progress</button>
+       </form>
+        
+
 
 </body>
 </html>

@@ -37,6 +37,8 @@ public class Qservice {
 
     String baseurl="https://api.alquran.cloud/v1/surah";
 
+    private HashOperations<String, String, SavedData> hashOperations;
+
     @Autowired
     public Qservice(RedisTemplate<String, SavedData> redisTemplate) {
     this.redisTemplate = redisTemplate;
@@ -44,10 +46,6 @@ public class Qservice {
 }
 
 
-
-    private HashOperations<String, String, SavedData> hashOperations;
-
-    
 
     public ResponseEntity<?> readAllSurahs(){
     ResponseEntity<?> responseEntity = restTemplate.getForEntity(baseurl, String.class);
@@ -84,7 +82,7 @@ public class Qservice {
         if (jsonObject.containsKey("data")) {
             JsonArray surahArray = jsonObject.getJsonArray("data");
 
-            System.out.println(surahArray);
+            // System.out.println(surahArray);
 
             return surahArray
                     .stream()
@@ -135,7 +133,6 @@ public class Qservice {
                         ayahList.add(ayah);
                     }
     
-                    System.out.println("ayahList =" + ayahList);
                     return ayahList;
                 } else {
                     System.out.println("Key 'ayahs' is missing in the JSON response.");
@@ -194,7 +191,6 @@ public SavedData loadDataFromRedis(String email) {
 
     return savedData;
 }
-
 
 
 public boolean existsInRedis(String email) {

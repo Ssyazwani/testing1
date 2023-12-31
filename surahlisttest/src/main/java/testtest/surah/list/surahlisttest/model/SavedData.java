@@ -20,7 +20,8 @@ public class SavedData {
 
     @NotBlank(message = "Email cannot be blank")
     private String email;
-
+    
+    @NotBlank(message = "SurahName cannot be blank")
     private String selectedSurahEnglishName;
 
 
@@ -59,19 +60,19 @@ public class SavedData {
     public String getFormattedBirthdate() {
         if (birthdate != null && !birthdate.isEmpty()) {
             try {
-                // Parse the current format
+               
                 SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = currentFormat.parse(birthdate);
 
-                // Format it to the desired format
+                
                 SimpleDateFormat desiredFormat = new SimpleDateFormat("dd-MM-yyyy");
                 return desiredFormat.format(date);
             } catch (ParseException e) {
-                // Handle parsing exception
+               
                 e.printStackTrace();
             }
         }
-        return ""; // or handle null case as needed
+        return ""; 
     }
 
     public SavedData(String birthdate, String comments, String email, String selectedSurahEnglishName) {
