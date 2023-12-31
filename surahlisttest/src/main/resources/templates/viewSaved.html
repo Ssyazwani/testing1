@@ -4,12 +4,12 @@
     <title>View Saved Progress</title>
     <style>
         body { 
-            font-family: 'Courier New', monospace;
+            font-family: 'Georgia', serif;
             background-color: antiquewhite;
         }
     
         h2 {
-            font-family: 'Courier New', monospace;
+            font-family: 'Georgia', serif;
             color: black;
         }
     
@@ -18,24 +18,29 @@
             color: black;
         }
         table {
+            font-family: 'Courier New', monospace;
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            font-weight: bold; 
         }
 
        
         th {
+            font-family: 'Courier New', monospace;
             background-color: #f2f2f2;
             padding: 12px;
             text-align: left;
-            border: 1px solid #ddd;
+            border: 1px solid #0d0d0d;
+            font-weight: bold; 
         }
 
         td {
             background-color: #ece3e3;
             padding: 10px;
             text-align: left;
-            border: 1px solid #ddd;
+            border: 1px solid #080808;
+            font-weight: bold; 
         }
 
         
@@ -79,12 +84,19 @@
         </tbody>
     </table>
 
+    <br>
+
     <h4> Keep it up!</h4>
 
-<br>
-<form action="/goback" method="get">
-    <button type="submit" class="button-style">Go Back</button>
-</form>
+    <br>
+
+    <h4> Thank you for using!</h4>
+
+    <br>
+    
+      <form action="/goback" method="get">
+      <button type="submit" class="button-style">Go Back</button>
+     </form>
 
 </body>
 </html>

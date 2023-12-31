@@ -52,17 +52,17 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to the Surah Progress Tracking</h1>
+    <h1>Welcome to the Surah Progress Tracking Site</h1>
 
-    <h4>You can start reading from the first chapter (dropdown list has arrange the chapters of the quran chronologically) or use this to memorise the Surah</h4>
 
 
     <br>
-    <div style="border: 2px solid #ccc; padding: 10px; background-color: #edeba5;">
+    <div style="border: 2px solid #ccc; padding: 10px; background-color: #efedb1;">
         <h4>Instructions on how to use:</h4>
         <p>Select the Surah you want to read and the language you would like the Surah to be translated to!</p>
         <p>Click <strong>Find</strong> to view the Surah selected</p>
         <p>Click <strong>View Previous Saved Progress</strong> to review your previous saved progress</p>
+        <p>You can start reading from the first chapter (dropdown list has arrange the chapters of the quran chronologically) or use this to memorise the Surah</p>
     </div>
     
 
@@ -70,7 +70,7 @@
     <br>
 
     <form th:action="@{/surahList}" th:method="post" th:object="${selectedSurah}">
-        <label style="font-size:25px" for="surahSelect" >Select a Surah:</label>
+        <label style="font-size:20px" for="surahSelect" >Select a Surah:</label>
         <select id="surahSelect" name="surahSelect" th:field="*{number}">
             <option th:each="surah : ${surahList}"
                     th:value="${surah.number}"
@@ -80,7 +80,7 @@
         <br>
         <br>
 
-        <label style="font-size:25px" for="language">Selected a Language:</label>
+        <label style="font-size:20px" for="language">Selected a Language:</label>
         <select id="language" name="language">
             <option value="id.indonesian">Bahasa Indonesian</option>
             <option value="en.asad">English</option>

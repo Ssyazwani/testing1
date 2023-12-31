@@ -106,6 +106,15 @@
             color: rgb(3, 3, 3);
         }
 
+        .error-message {
+        color: red;
+        font-size: 14px;
+        border: 1px solid red; 
+        font-weight: bold;
+        padding: 5px; 
+        
+    }
+
     </style>
 <body>
 
@@ -117,32 +126,32 @@
     <form th:action="@{/save}" th:method="post" th:object="${savedData}">
         <label for="email"><strong>Enter your email:</strong></label>
         <input type="text" th:field="*{email}">
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"class="error-message"></span>
         <br/>
 
     
 
-        <label for="surahSelect"><strong>Enter your email:</strong></label>
+        <label for="surahSelect"><strong>Select Your Surah:</strong></label>
         <select id="surahSelect" name="surahSelect" th:field="*{selectedSurahEnglishName}">
         <option th:each="surah : ${surahList}" 
             th:value="${surah.englishName}" 
             th:text="${surah.number + ' - ' + surah.englishName}"></option>
          </option>
        </select>
-        <span th:if="${#fields.hasErrors('selectedSurahEnglishName')}" th:errors="*{selectedSurahEnglishName}"></span>
+        <span th:if="${#fields.hasErrors('selectedSurahEnglishName')}" th:errors="*{selectedSurahEnglishName}"class="error-message"></span>
        <br>
 
     
         <label for="birthdate"><strong>Date of Updated Progress</strong></label>
         <input type="date" th:field="*{birthdate}" th:value="${currentDate}">
-        <span th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></span>
+        <span th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}" class="error-message"></span>
         <br>
 
-        <label for="comments"><strong>Details of Progress:<br>(example: Memorised until the 3rd Ayat etc...)</strong></label>
+        <label for="comments"><strong>Details of Progress:<br>(example: Memorised until the 3rd Ayah etc...)</strong></label>
         <div>
         <textarea th:field="*{comments}" rows="4" cols="50" style="margin: 0 auto;"></textarea>
         </div>
-        <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"></span>
+        <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"class="error-message"></span>
         <br/>
 
 
