@@ -1,65 +1,4 @@
-<!--DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Saving Progress</title>
-    <style>
-        body { 
-            font-family: 'Courier New', monospace;
-            background-color: antiquewhite;
-        }
-    
-        h1 {
-            font-family: 'Courier New', monospace;
-            color: black;
-        }
-    
-        h4 {
-            font-family: 'Courier New', monospace;
-            color: black;
-        }
-    </style>
-</head>
-<body>
-    <h1>Saving Your Updated Progress</h1>
-    <form th:action="@{/save}" th:method="post" th:object="${savedData}">
-        <label for="email">Enter your email:</label>
-        <input type="text" th:field="*{email}">
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        <br/>
 
-        <label for="surahSelect">Select a Surah:</label>
-        <select id="surahSelect" name="surahSelect" th:field="*{selectedSurahEnglishName}">
-           <option th:each="surah : ${surahList}" 
-            th:value="${surah.englishName}" 
-            th:text="${surah.englishName}">
-        </option>
-        </select>
-        <br>
-
-        <label for="comments">Details of Progress:</label>
-        <textarea th:field="*{comments}" rows="4" cols="50"></textarea>
-        <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"></span>
-        <br/>
-    
-        <label for="birthdate">Date of Updated Progress:</label>
-        <input type="date" th:field="*{birthdate}" th:value="${currentDate}">
-        <span th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></span>
-        <br/>
-
-    
-    
-        <button type="submit">Submit</button>
-    </form>
-    
-
-    <form action="/goback" method="get">
-        <button type="submit">Go Back to SurahPage</button>
-    </form>
-
-
-</body>
-</html!-->
 
    
 
@@ -68,83 +7,44 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Saving Progress</title>
-    <style>
-        body { 
-            font-family: 'Courier New', monospace;
-            background-color: antiquewhite;
-        }
-    
-        h1 {
-            font-family: 'Courier New', monospace;
-            color: black;
-        }
-    
-        h3 {
-            font-family: 'Geogia', serif;
-            color: rgb(244, 85, 85);
-        }
-
-        .button-style {
-         background-color: #e7d8a4;
-         border: solid;
-         color: rgb(11, 10, 10);
-         padding: 10px 10px;
-         text-align: center;
-         text-decoration: none;
-         display: inline-block;
-         font-size: 14px;
-         margin: 4px 2px;
-         cursor: pointer;
-        }
-
-        select {
-            background-color: rgb(242, 244, 236);
-            font-size: 16px;
-        }
-
-        select option {
-            color: rgb(3, 3, 3);
-        }
-
-        .error-message {
-        color: red;
-        font-size: 14px;
-        border: 1px solid red; 
-        font-weight: bold;
-        padding: 5px; 
-        
-    }
-
-    </style>
+    <link href="style.css" rel="stylesheet">
 <body>
 
     <h1>Saving Your Updated Progress</h1>
 
-   <h3><em>Please enter your details to update your progress</em></h3>
+   <h3>Please enter your details to update your progress</h3>
 
 
+   <div class="page3">
     <form th:action="@{/save}" th:method="post" th:object="${savedData}">
         <label for="email"><strong>Enter your email:</strong></label>
         <input type="text" th:field="*{email}">
         <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"class="error-message"></span>
         <br/>
 
-    
+        <br>
+
 
         <label for="surahSelect"><strong>Select Your Surah:</strong></label>
         <select id="surahSelect" name="surahSelect" th:field="*{selectedSurahEnglishName}">
         <option th:each="surah : ${surahList}" 
             th:value="${surah.englishName}" 
             th:text="${surah.number + ' - ' + surah.englishName}"></option>
-         </option>
-       </select>
+        </option>
+        </select>
         <span th:if="${#fields.hasErrors('selectedSurahEnglishName')}" th:errors="*{selectedSurahEnglishName}"class="error-message"></span>
-       <br>
+        <br>
+
+
+        <br>
 
     
         <label for="birthdate"><strong>Date of Updated Progress</strong></label>
         <input type="date" th:field="*{birthdate}" th:value="${currentDate}">
         <span th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}" class="error-message"></span>
+        <br>
+
+
         <br>
 
         <label for="comments"><strong>Details of Progress:<br>(example: Memorised until the 3rd Ayah etc...)</strong></label>
@@ -154,7 +54,9 @@
         <span th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"class="error-message"></span>
         <br/>
 
-
+        </div>
+        
+        <br>
 
         <button type="submit" class="button-style">Submit</button>
     </form>

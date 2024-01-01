@@ -13,15 +13,6 @@ public class Surah implements Serializable {
     private Integer numberOfAyahs;
     private String revelationType;
 
-    // public Surah(Integer number, String name, String englishName, String englishNameTranslation,Integer numberOfAyahs, String revelationType){
-    //      this.number = number;
-    //      this.name = name;
-    //      this.englishName = englishName;
-    //      this.englishNameTranslation = englishNameTranslation;
-    //      this.numberOfAyahs = numberOfAyahs;
-    //      this.revelationType = revelationType;
-
-    // }
     
 
     public Integer getNumber() {
@@ -76,12 +67,6 @@ public class Surah implements Serializable {
     }
 
 
-//     "number": 1,
-// "name": "سُورَةُ ٱلْفَاتِحَةِ",
-// "englishName": "Al-Faatiha",
-// "englishNameTranslation": "The Opening",
-// "numberOfAyahs": 7,
-// "revelationType": "Meccan"
-// },
+
     
 }

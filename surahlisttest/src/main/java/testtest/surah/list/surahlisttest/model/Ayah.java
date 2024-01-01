@@ -100,18 +100,6 @@ public class Ayah implements Serializable{
 
 
 
-//     // "number": 5,
-// "text": "إِیَّاكَ نَعۡبُدُ وَإِیَّاكَ نَسۡتَعِینُ\n",
-// "numberInSurah": 5,
-// "juz": 1,
-// "manzil": 1,
-// "page": 1,
-// "ruku": 1,
-// "hizbQuarter": 1,
-// "sajda": false
-//     }
-
-
     
 }
 

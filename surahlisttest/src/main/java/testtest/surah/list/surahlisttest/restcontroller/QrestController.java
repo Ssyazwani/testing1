@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import testtest.surah.list.surahlisttest.model.Ayah;
+import jakarta.servlet.http.HttpSession;
 import testtest.surah.list.surahlisttest.model.Surah;
 import testtest.surah.list.surahlisttest.service.Qservice;
 
@@ -18,37 +18,39 @@ import testtest.surah.list.surahlisttest.service.Qservice;
 public class QrestController {
 
     @Autowired
-    Qservice qService;
-    
+    private Qservice qService;
 
-     @GetMapping("/allSurahs")
-    public ResponseEntity<List<Surah>> readAllSurahs() {
-        ResponseEntity<?> responseEntity = qService.readAllSurahs();
-        String jsonString = responseEntity.getBody().toString();
-        return ResponseEntity.ok(qService.parseSurahList(jsonString));
+    @GetMapping("/surahList")
+    public ResponseEntity<List<Surah>> getSurahList(HttpSession session) {
+        ResponseEntity<?> response = qService.readAllSurahs();
+        List<Surah> surahList = qService.parseSurahList((String) response.getBody());
+
+        session.setAttribute("surahList", surahList);
+
+        return ResponseEntity.ok(surahList);
     }
+
+    @GetMapping("/arabic/{number}")
+    public ResponseEntity<String> readApiArabic(@PathVariable Integer number) {
+        return qService.readApiArabic(number);
+    }
+
+    @GetMapping("/otherLang/{number}/{language}")
+    public ResponseEntity<?> readApiOtherLang(@PathVariable Integer number, @PathVariable String language) {
+        return qService.readApiOtherLang(number, language);
+    }
+
+    @GetMapping("/romanized/{number}")
+    public ResponseEntity<?> readApiRomanized(@PathVariable Integer number) {
+        return qService.readApiRomanized(number);
+    }
+}
+
+    
+   
+
+
 
    
 
-    @GetMapping("/arabic")
-    public ResponseEntity<List<Ayah>> readApiArabic(@RequestParam Integer number) {
-        return fetchDataAndParse(number);
-    }
 
-    @GetMapping("/otherLang")
-    public ResponseEntity<List<Ayah>> readApiOtherLang(@RequestParam Integer number, @RequestParam String language) {
-        return fetchDataAndParse(number, language);
-    }
-
-    private ResponseEntity<List<Ayah>> fetchDataAndParse(Integer number) {
-        ResponseEntity<?> responseEntity = qService.readApiArabic(number);
-        String jsonString = responseEntity.getBody().toString();
-        return ResponseEntity.ok(qService.parseAyahList(jsonString));
-    }
-
-    private ResponseEntity<List<Ayah>> fetchDataAndParse(Integer number, String language) {
-        ResponseEntity<?> responseEntity = qService.readApiOtherLang(number, language);
-        String jsonString = responseEntity.getBody().toString();
-        return ResponseEntity.ok(qService.parseAyahList(jsonString));
-    }
-}

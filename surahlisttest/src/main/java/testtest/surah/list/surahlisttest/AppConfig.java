@@ -1,32 +1,18 @@
 package testtest.surah.list.surahlisttest;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import testtest.surah.list.surahlisttest.model.SavedData;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericToStringSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+
 
 @Configuration
 public class AppConfig {
@@ -47,11 +33,14 @@ public class AppConfig {
     @Value("${spring.redis.password}")
     private String redisPassword;
 
-    @Bean
+    @Bean()
     public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(redisHost, redisPort);
         config.setDatabase(redisDatabase);
         config.setPassword(redisPassword);
+        config.setUsername(redisUser);
+        config.setHostName(redisHost);
+        config.setPort(redisPort);
 
         return new JedisConnectionFactory(config);
     }
@@ -60,13 +49,16 @@ public class AppConfig {
     public RedisTemplate<String, SavedData> redisTemplate() {
         RedisTemplate<String, SavedData> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
-
         template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericToStringSerializer<>(Object.class));
-
+        template.setValueSerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new StringRedisSerializer());
+    
         return template;
     }
 }
+
+
 
 
 

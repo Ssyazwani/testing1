@@ -3,46 +3,19 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Email Page</title>
-    <style>
-        body { 
-            font-family: 'Courier New', monospace;
-            background-color: antiquewhite;
-        }
-    
-        h2 {
-            font-family: 'Courier New', monospace;
-            color: black;
-        }
-    
-
-        h3 {
-            font-family: 'Gerogia', serif;
-            color: black;
-        }
-
-        .button-style {
-         background-color: #e7d8a4;
-         border: solid;
-         color: rgb(11, 10, 10);
-         padding: 10px 10px;
-         text-align: center;
-         text-decoration: none;
-         display: inline-block;
-         font-size: 14px;
-         margin: 4px 2px;
-         cursor: pointer;
-        }
-
-    </style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
     <h2>Finding Your Latest Progress Notes</h2>
     <h3>Please enter the <strong>email</strong> you have saved your data with!</h3>
+
+    <div class="page3">
     <form action="/search" method="post">
         <label for="email"><strong>Enter Email:</strong></label>
         <input type="text" id="email" name="email" required>
         <button type="submit" class="button-style">Search</button>
     </form>
+    </div>
     <br>
     <br>
 

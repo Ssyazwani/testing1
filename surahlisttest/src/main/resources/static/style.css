@@ -1,0 +1,133 @@
+
+
+        
+        body { 
+            font-family: 'Georgia',serif;
+            background-image: url("sky1.jpg"); 
+            background-position: center;
+            background-size: cover;
+ 
+            /* from ME*/
+        }
+
+        .page1{
+            border: 2px solid #ccc; 
+            padding: 10px; 
+            background-color: rgb(177, 212, 239);
+
+        }
+        .page2first {
+            background-color: #f3cfcf; 
+            margin-bottom: 5px;
+            padding: 10px; 
+            border-radius: 5px;
+            font-weight: bold;
+            border: 2px solid #e0cfcf;  
+
+        }
+
+        .page2{
+            border: 2px solid #ccc; 
+            padding: 10px; 
+            background-color: rgb(177, 212, 239);
+            background-size:300px 100px;
+
+        }
+
+        .page3{
+            padding: 10px; 
+            background-color: rgb(224, 227, 230);
+        }
+
+
+        h1 {
+            font-family: 'Courier New',monospace;
+            color: black;
+            border: 2px solid #ccc; 
+            padding: 10px; 
+            background-color: rgb(177, 212, 239);
+        }
+
+        h3{
+           
+            font-style: italic; 
+        }
+
+        h4,p{
+            font-family: 'Georgia',serif;
+            color: black;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .button-style {
+         background-color: #9dd6ea;
+         border: solid;
+         color: rgb(11, 10, 10);
+         padding: 10px 10px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-family: 'Courier New', monospace;
+         font-weight: bold; 
+         font-size: 14px;
+         margin: 4px 2px;
+         cursor: pointer;
+        }
+
+        select {
+            background-color: rgb(242, 244, 236);
+            font-size: 16px;
+        }
+
+        select option {
+            color: rgb(3, 3, 3);
+        }
+
+        table {
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-weight: bold; 
+        }
+
+       
+        th {
+            font-family: 'Courier New', monospace;
+            background-color: #f2f2f2;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #0d0d0d;
+            font-weight: bold; 
+        }
+
+        td {
+            background-color: #ece3e3;
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #080808;
+            font-weight: bold; 
+        }
+
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            border: 1px solid red; 
+            font-weight: bold;
+            padding: 5px; 
+            
+        }

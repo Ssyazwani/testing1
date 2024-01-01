@@ -45,13 +45,9 @@ public class Qservice {
     this.hashOperations = redisTemplate.opsForHash();
 }
 
-
-
     public ResponseEntity<?> readAllSurahs(){
     ResponseEntity<?> responseEntity = restTemplate.getForEntity(baseurl, String.class);
     String jsonString = (String) responseEntity.getBody();
-        
-        System.out.println("JSON Response from API: " + jsonString);
     
     return restTemplate.getForEntity(baseurl, String.class);
     }
@@ -82,7 +78,6 @@ public class Qservice {
         if (jsonObject.containsKey("data")) {
             JsonArray surahArray = jsonObject.getJsonArray("data");
 
-            // System.out.println(surahArray);
 
             return surahArray
                     .stream()
@@ -118,7 +113,6 @@ public class Qservice {
         try (JsonReader jsonReader = readerFactory.createReader(new StringReader(jsonString))) {
             JsonObject jsonObject = jsonReader.readObject();
     
-            // System.out.println("Parsed JSON Object: " + jsonObject);
     
             if (jsonObject.containsKey("data")) {
                 JsonObject dataObject = jsonObject.getJsonObject("data");
@@ -148,9 +142,7 @@ public class Qservice {
     }
     
 
-  
-
-private Ayah parseAyahObject(JsonObject jsonAyah) {
+    private Ayah parseAyahObject(JsonObject jsonAyah) {
     Ayah ayah = new Ayah();
     ayah.setNumber(jsonAyah.getInt("number", 0));
     ayah.setText(jsonAyah.getString("text", ""));
@@ -166,7 +158,7 @@ private Ayah parseAyahObject(JsonObject jsonAyah) {
     return ayah;
 }
 
-public void saveDataToRedis(SavedData savedData) {
+    public void saveDataToRedis(SavedData savedData) {
     String redisKey = savedData.getEmail();
 
     Map<String, String> dataMap = new HashMap<>();
@@ -177,7 +169,7 @@ public void saveDataToRedis(SavedData savedData) {
     redisTemplate.opsForHash().putAll(redisKey, dataMap);
 }
 
-public SavedData loadDataFromRedis(String email) {
+    public SavedData loadDataFromRedis(String email) {
     String redisKey = email;
 
     Map<Object, Object> dataMap = redisTemplate.opsForHash().entries(redisKey);
@@ -193,7 +185,7 @@ public SavedData loadDataFromRedis(String email) {
 }
 
 
-public boolean existsInRedis(String email) {
+    public boolean existsInRedis(String email) {
     return redisTemplate.hasKey(email);
 }
 
