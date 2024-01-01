@@ -158,7 +158,6 @@ public String findData(@RequestParam String email, Model model) {
 
     if (qService.existsInRedis(redisKey)) {
         SavedData savedData = qService.loadDataFromRedis(redisKey);
-        System.out.println("Loaded Data: " + savedData); 
         model.addAttribute("email", email);
         model.addAttribute("savedData", savedData);
     } else {
