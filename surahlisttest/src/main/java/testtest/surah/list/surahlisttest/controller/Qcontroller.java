@@ -76,7 +76,7 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
     if ("viewBookmarked".equals(action)) {
         return "emailPage";
 
-    } else if ("find".equals(action)) {
+    }else if ("find".equals(action)) {
 
         ResponseEntity<?> responseOtherLang = qService.readApiOtherLang(surahNumber, language);
         List<Ayah> ListOtherLang = qService.parseAyahList(responseOtherLang.getBody().toString());
@@ -100,6 +100,11 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
     @GetMapping("/goback")
     public String handleGoBackAction() {
        return "redirect:/surahList"; 
+   }
+
+   @GetMapping("/rest")
+    public String restApiview() {
+       return "rest"; 
    }
 
 
