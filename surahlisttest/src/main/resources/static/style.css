@@ -31,12 +31,21 @@
             padding: 10px; 
             background-color: rgb(177, 212, 239);
             background-size:300px 100px;
+            
 
         }
 
         .page3{
-            padding: 10px; 
             background-color: rgb(224, 227, 230);
+            padding: 10px;
+
+        }
+
+        .page4{
+            background-color: rgb(224, 227, 230);
+            padding: 10px;
+            text-align: center;
+
         }
 
 
