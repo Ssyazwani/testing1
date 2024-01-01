@@ -1,15 +1,22 @@
 package testtest.surah.list.surahlisttest.restcontroller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+import testtest.surah.list.surahlisttest.model.SavedData;
 import testtest.surah.list.surahlisttest.model.Surah;
 import testtest.surah.list.surahlisttest.service.Qservice;
 
@@ -19,6 +26,9 @@ public class QrestController {
 
     @Autowired
     private Qservice qService;
+
+    @Autowired
+    private RedisTemplate<String, SavedData> redisTemplate; 
 
     @GetMapping("/surahList")
     public ResponseEntity<List<Surah>> getSurahList(HttpSession session) {
@@ -43,6 +53,28 @@ public class QrestController {
     @GetMapping("/romanized/{number}")
     public ResponseEntity<?> readApiRomanized(@PathVariable Integer number) {
         return qService.readApiRomanized(number);
+    }
+
+    
+
+    @GetMapping("/load/{email}")
+    public ResponseEntity<SavedData> loadDataFromRedis(@PathVariable String email) {
+        String redisKey = email;
+
+        Map<Object, Object> dataMap = redisTemplate.opsForHash().entries(redisKey);
+
+        if (dataMap.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        SavedData savedData = new SavedData(
+                (String) dataMap.get("birthdate"),
+                (String) dataMap.get("comments"),
+                email,
+                (String) dataMap.get("selectedSurahEnglishName")
+        );
+
+        return new ResponseEntity<>(savedData, HttpStatus.OK);
     }
 }
 

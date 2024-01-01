@@ -44,7 +44,6 @@ public String showSurahList(Model model,HttpSession session) {
     session.setAttribute("selectedSurah", selectedSurah);
     model.addAttribute("surahList", surahList);
     model.addAttribute("selectedSurah", selectedSurah);
-    System.out.println(surahList);
 
     return "surahList";
 }
@@ -63,7 +62,6 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
     ResponseEntity<?> response = qService.readAllSurahs();
 
     String responseBody = (String) response.getBody();
-    // List<Surah> surahList = qService.parseSurahList(responseBody);
 
     List<Surah> surahList = (List<Surah>) session.getAttribute("surahList");
     Surah detailedSurah = surahList.stream()
@@ -115,7 +113,6 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
        HttpSession session = request.getSession();
        Surah selectedSurah = (Surah) session.getAttribute("selectedSurah");
        String surahEnglishName = selectedSurah.getEnglishName();
-       System.out.println("Surah English Name: " + surahEnglishName);
    
        ResponseEntity<?> response = qService.readAllSurahs();
        List<Surah> surahList1 = qService.parseSurahList((String) response.getBody());
