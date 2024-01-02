@@ -6,7 +6,11 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
+
+
     <h1>Welcome to the Surah Progress Tracking Site</h1>
+
+    <h2>اَلسَّلاَ مُ عَلَيْكُمْ <br> <em> Assalamu’alaikum </em> <br> (May peace be upon you)</h2>
 
     <form name="action" method="get" action="/rest">
         <input type="hidden" name="action" value="rest">
@@ -30,7 +34,7 @@
     <br>
 
     <form th:action="@{/surahList}" th:method="post" th:object="${selectedSurah}">
-        <label style="font-size:20px;font-weight: bold; " for="surahSelect" >Select a Surah:</label>
+        <label style="font-size:20px;font-weight: bold; color: white; " for="surahSelect" >Select a Surah:</label>
         <select id="surahSelect" name="surahSelect" th:field="*{number}">
             <option th:each="surah : ${surahList}"
                     th:value="${surah.number}"
@@ -40,7 +44,7 @@
         <br>
         <br>
 
-        <label style="font-size:20px;font-weight: bold; " for="language">Select a Language:</label>
+        <label style="font-size:20px; font-weight: bold; color: white;" for="language">Select a Language:</label>
         <select id="language" name="language">
             <option value="en.asad">English</option>
             <option value="id.indonesian">Bahasa Indonesian</option>

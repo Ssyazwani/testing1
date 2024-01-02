@@ -3,17 +3,16 @@
         
         body { 
             font-family: 'Georgia',serif;
-            background-image: url("sky1.jpg"); 
+            background-image: url("quran.jpg"); 
             background-position: center;
             background-size: cover;
  
-            /* from ME*/
         }
 
         .page1{
             border: 2px solid #ccc; 
             padding: 10px; 
-            background-color: rgb(177, 212, 239);
+            background-color: rgb(127, 168, 199);
 
         }
         .page2first {
@@ -23,6 +22,7 @@
             border-radius: 5px;
             font-weight: bold;
             border: 2px solid #e0cfcf;  
+            text-align: center;
 
         }
 
@@ -31,6 +31,7 @@
             padding: 10px; 
             background-color: rgb(177, 212, 239);
             background-size:300px 100px;
+            
             
 
         }
@@ -51,14 +52,22 @@
 
         h1 {
             font-family: 'Courier New',monospace;
-            color: black;
+            color: rgb(230, 227, 227);
             border: 2px solid #ccc; 
             padding: 10px; 
-            background-color: rgb(177, 212, 239);
+            background-color: rgb(88, 113, 132);
+        }
+
+        h2{
+            font-weight: bold; 
+            color: white;
+            text-align: center;
+            font-size: 30px;
         }
 
         h3{
-           
+            color: white;
+            text-align: center;
             font-style: italic; 
         }
 
@@ -80,7 +89,7 @@
         }
 
         .button-style {
-         background-color: #9dd6ea;
+         background-color:rgb(118, 151, 176);
          border: solid;
          color: rgb(11, 10, 10);
          padding: 10px 10px;
@@ -95,7 +104,7 @@
         }
 
         .button-style1 {
-            background-color: #9dd6ea;
+            background-color:rgb(118, 151, 176);
             border: solid;
             color: rgb(11, 10, 10);
             text-align: center;
