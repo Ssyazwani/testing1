@@ -12,11 +12,11 @@
         .page1{
             border: 2px solid #ccc; 
             padding: 10px; 
-            background-color: rgb(127, 168, 199);
+            background-color: rgb(167, 225, 198);
 
         }
         .page2first {
-            background-color: #f3cfcf; 
+            background-color: #d39dba; 
             margin-bottom: 5px;
             padding: 10px; 
             border-radius: 5px;
@@ -29,7 +29,7 @@
         .page2{
             border: 2px solid #ccc; 
             padding: 10px; 
-            background-color: rgb(177, 212, 239);
+            background-color: rgb(167, 225, 198);
             background-size:300px 100px;
             
             
@@ -55,7 +55,7 @@
             color: rgb(230, 227, 227);
             border: 2px solid #ccc; 
             padding: 10px; 
-            background-color: rgb(88, 113, 132);
+            background-color: rgb(88, 132, 98);
         }
 
         h2{
@@ -89,7 +89,7 @@
         }
 
         .button-style {
-         background-color:rgb(118, 151, 176);
+         background-color:rgb(91, 146, 113);
          border: solid;
          color: rgb(11, 10, 10);
          padding: 10px 10px;
@@ -104,7 +104,7 @@
         }
 
         .button-style1 {
-            background-color:rgb(118, 151, 176);
+            background-color:rgb(112, 166, 142);
             border: solid;
             color: rgb(11, 10, 10);
             text-align: center;
@@ -118,14 +118,51 @@
             right: 16px;
            }
 
-        select {
-            background-color: rgb(242, 244, 236);
-            font-size: 16px;
-        }
-
-        select option {
-            color: rgb(3, 3, 3);
-        }
+           .custom-select {
+            min-width: 350px;
+            position: relative;
+          }
+          
+          select {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            font-size: 1.15rem;
+            padding: 0.675em 6em 0.675em 1em;
+            background-color: #fff;
+            border: 1px solid #caced1;
+            border-radius: 0.25rem;
+            color: #000;
+            cursor: pointer;
+           
+          }
+          
+          .custom-select::before {
+            border-bottom: var(--size) solid #fff;
+          }
+          .custom-select::after {
+            --size: 0.3rem;
+            content: "";
+            position: absolute;
+            right: 1rem;
+            pointer-events: none;
+            border-top: var(--size) solid #fff;
+          }
+          
+          .custom-select::before {
+            border-left: var(--size) solid transparent;
+            border-right: var(--size) solid transparent;
+            border-bottom: var(--size) solid black;
+            top: 40%;
+          }
+          
+          .custom-select::after {
+            border-left: var(--size) solid transparent;
+            border-right: var(--size) solid transparent;
+            border-top: var(--size) solid black;
+            top: 55%;
+          }
+          
 
         table {
             font-family: 'Courier New', monospace;

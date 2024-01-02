@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Surah Tracking Progress</title>
+    <title> Qu.PT - Surah Progress Tracker</title>
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
 
-    <h1>Welcome to the Surah Progress Tracking Site</h1>
+    <h1 style ="text-align: center;">Welcome to Qu.PT</h1>
 
     <h2>اَلسَّلاَ مُ عَلَيْكُمْ <br> <em> Assalamu’alaikum </em> <br> (May peace be upon you)</h2>
 
@@ -34,6 +34,7 @@
     <br>
 
     <form th:action="@{/surahList}" th:method="post" th:object="${selectedSurah}">
+        <div class ="custom-select">
         <label style="font-size:20px;font-weight: bold; color: white; " for="surahSelect" >Select a Surah:</label>
         <select id="surahSelect" name="surahSelect" th:field="*{number}">
             <option th:each="surah : ${surahList}"
@@ -54,6 +55,8 @@
             <option value="hi.hindi">Hindi</option>
 
         </select>
+
+    </div>
 
         <br>
         <br>
