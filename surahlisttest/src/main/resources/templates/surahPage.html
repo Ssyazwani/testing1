@@ -45,7 +45,7 @@
             <li th:each="ayah, iterStat : ${ListOtherLang}" style="background-color: #f5f5f5; margin-bottom: 5px; padding: 10px; border-radius: 5px; text-align: center;">
                 <br>
                 <p>No. <span th:text="${ayah.number}"></span></p>
-                <p>Arabic Text:<br><br> <span style ="font-size: 30px;" th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></span></p>
+                <p><br><br> <span style ="font-size: 30px;" th:if="${iterStat.index < ListArabic.size()}" th:text="${ListArabic[iterStat.index].text}"></span></p>
                 <p><span th:style="'font-style: italic;'" style ="font-size: 15px;" th:if="${iterStat.index < ListRomanized.size()}" th:text="${ListRomanized[iterStat.index].text}"></span></p>
                 <p><span style ="font-size: 15px;" th:text="${ayah.text}"></span></p>
                 <br>
