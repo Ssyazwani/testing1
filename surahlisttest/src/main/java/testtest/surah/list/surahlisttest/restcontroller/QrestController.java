@@ -63,17 +63,17 @@ public class QrestController {
     public ResponseEntity<SavedData> loadDataFromRedis(@PathVariable String email) {
         String redisKey = email;
 
-        Map<Object, Object> dataMap = redisTemplate.opsForHash().entries(redisKey);
+        Map<Object, Object> data = redisTemplate.opsForHash().entries(redisKey);
 
-        if (dataMap.isEmpty()) {
+        if (data.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         SavedData savedData = new SavedData(
-                (String) dataMap.get("birthdate"),
-                (String) dataMap.get("comments"),
+                (String) data.get("birthdate"),
+                (String) data.get("comments"),
                 email,
-                (String) dataMap.get("selectedSurahEnglishName")
+                (String) data.get("selectedSurahEnglishName")
         );
 
         return new ResponseEntity<>(savedData, HttpStatus.OK);
