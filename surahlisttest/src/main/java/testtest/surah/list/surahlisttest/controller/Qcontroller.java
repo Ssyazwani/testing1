@@ -27,14 +27,14 @@ import testtest.surah.list.surahlisttest.model.Surah;
 import testtest.surah.list.surahlisttest.service.Qservice;
 
 @Controller
-@RequestMapping
+@RequestMapping()
 public class Qcontroller{
 
     @Autowired
     Qservice qService;
 
     
-@GetMapping("/surahList")
+@GetMapping()
 public String showSurahList(Model model,HttpSession session) {
     ResponseEntity<?> response = qService.readAllSurahs();
     List<Surah> surahList = qService.parseSurahList((String) response.getBody());
@@ -97,14 +97,14 @@ public String processSurahSelection(@ModelAttribute Surah selectedSurah,
 
     @GetMapping("/goback")
     public String handleGoBackAction() {
-       return "redirect:/surahList"; 
+       return "redirect:"; 
    }
+
 
    @GetMapping("/rest")
     public String restApiview() {
        return "rest"; 
    }
-
 
 
    @GetMapping("/userPage")
