@@ -70,7 +70,7 @@ public class QrestController {
         }
 
         SavedData savedData = new SavedData(
-                (String) data.get("birthdate"),
+                (String) data.get("currentdate"),
                 (String) data.get("comments"),
                 email,
                 (String) data.get("selectedSurahEnglishName")

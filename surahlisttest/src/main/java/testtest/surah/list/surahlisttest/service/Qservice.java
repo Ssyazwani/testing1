@@ -162,7 +162,7 @@ public class Qservice {
     String redisKey = savedData.getEmail();
 
     Map<String, String> dataMap = new HashMap<>();
-    dataMap.put("birthdate", savedData.getBirthdate());
+    dataMap.put("currentdate", savedData.getCurrentdate());
     dataMap.put("comments", savedData.getComments());
     dataMap.put("selectedSurahEnglishName", savedData.getSelectedSurahEnglishName());  
 
@@ -175,7 +175,7 @@ public class Qservice {
     Map<Object, Object> dataMap = redisTemplate.opsForHash().entries(redisKey);
 
     SavedData savedData = new SavedData(
-        (String) dataMap.get("birthdate"),
+        (String) dataMap.get("currentdate"),
         (String) dataMap.get("comments"),
         email, 
         (String) dataMap.get("selectedSurahEnglishName")

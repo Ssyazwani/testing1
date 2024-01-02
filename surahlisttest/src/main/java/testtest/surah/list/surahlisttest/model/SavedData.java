@@ -13,7 +13,7 @@ public class SavedData {
     
     @NotBlank(message = "Date cannot be blank")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private String birthdate;
+    private String currentdate;
 
     @NotBlank(message = "Comments cannot be blank")
     private String comments;
@@ -41,12 +41,12 @@ public class SavedData {
         this.email = email;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getCurrentdate() {
+        return currentdate;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setCurrentdate(String currentdate) {
+        this.currentdate = currentdate;
     }
 
     public String getComments() {
@@ -57,12 +57,12 @@ public class SavedData {
         this.comments = comments;
     }
 
-    public String getFormattedBirthdate() {
-        if (birthdate != null && !birthdate.isEmpty()) {
+    public String getFormattedCurrentdate() {
+        if (currentdate != null && !currentdate.isEmpty()) {
             try {
                
                 SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = currentFormat.parse(birthdate);
+                Date date = currentFormat.parse(currentdate);
 
                 
                 SimpleDateFormat desiredFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -75,8 +75,8 @@ public class SavedData {
         return ""; 
     }
 
-    public SavedData(String birthdate, String comments, String email, String selectedSurahEnglishName) {
-        this.birthdate = birthdate;
+    public SavedData(String currentdate, String comments, String email, String selectedSurahEnglishName) {
+        this.currentdate = currentdate;
         this.comments = comments;
         this.email = email;
         this.selectedSurahEnglishName = selectedSurahEnglishName;
@@ -86,8 +86,9 @@ public class SavedData {
     @Override
     public String toString() {
         return "Loaded Data{" +
-                "Date=" + birthdate +
-                ", comments ='" + comments  +
+                "Date=" + currentdate +
+                ", comments =" + comments  +
+                ", Surah Name = "  + selectedSurahEnglishName +
                 '}';
 
     }
